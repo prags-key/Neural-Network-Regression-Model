@@ -12,7 +12,7 @@ The model is trained using backpropagation to minimize a loss function such as M
 
 ## Neural Network Model
 
-<img width="1115" height="695" alt="image" src="https://github.com/user-attachments/assets/14933a1a-6fdf-4649-b779-68a33dfca352" />
+![alt text](image-1.png)
 
 
 ## DESIGN STEPS
@@ -49,58 +49,59 @@ Evaluate the model with the testing data.
 ### Name:PRAGATHI KUMAR
 ### Register Number: 212224230200
 ```
-#creating model class
 class NeuralNet(nn.Module):
-  def __init__(self):
+    def __init__(self):
         super().__init__()
-        self.fc1=nn.Linear(1, 8)
-        self.fc2=nn.Linear(8, 10)
-        self.fc3=nn.Linear(10, 1)
-        self.relu=nn.ReLU()
-        self.history={'loss':[]}
+        self.fc1 = nn.Linear(1, 16)
+        self.fc2 = nn.Linear(16, 8)
+        self.fc3 = nn.Linear(8, 4)
+        self.fc4 = nn.Linear(4, 1)
 
-  def forward(self,x):
-        x=self.relu(self.fc1(x))
-        x=self.relu(self.fc2(x))
-        x=self.fc3(x)
+    def forward(self, x):
+        x = torch.relu(self.fc1(x))
+        x = torch.relu(self.fc2(x))
+        x = torch.relu(self.fc3(x))
+        x = self.fc4(x)
         return x
 
-# Initialize the Model, Loss Function, and Optimizer
-ai_brain = NeuralNet()
-criterion=nn.MSELoss()
-optimizer=optim.RMSprop(ai_brain.parameters(), lr=0.001)
 
-#Function to train model
-def train_model(ai_brain, X_train, y_train, criterion, optimizer, epochs=2000):
+# Initialize the Model, Loss Function, and Optimizer
+model = NeuralNet()
+criterion = nn.MSELoss()
+optimizer = optim.Adam(model.parameters(), lr=0.01)
+
+def train_model(nethraa_brain, X_train, y_train, criterion, optimizer, epochs=2000):
+    losses = []
 
     for epoch in range(epochs):
-      optimizer.zero_grad()
-      loss=criterion(ai_brain(X_train),y_train)
-      loss.backward()
-      optimizer.step()
+        optimizer.zero_grad()
+        output = nethraa_brain(X_train)
+        loss = criterion(output, y_train)
+        loss.backward()
+        optimizer.step()
+        losses.append(loss.item())
 
-      ai_brain.history['loss'].append(loss.item())
-      if epoch % 200 == 0:
-          print(f'Epoch [{epoch}/{epochs}], Loss: {loss.item():.6f}')
+    return losses
+
+
 
 ```
 ## Dataset Information
 
-<img width="274" height="523" alt="image" src="https://github.com/user-attachments/assets/93daba98-4d3a-4824-9dd0-91e3f46d9338" />
+![alt text](image.png)
 
 
 ## OUTPUT
-<img width="784" height="492" alt="image" src="https://github.com/user-attachments/assets/c2562d82-6731-4fba-a6c0-04240b1d5791" />
-
 
 ### Training Loss Vs Iteration Plot
 
-<img width="720" height="572" alt="image" src="https://github.com/user-attachments/assets/f3540d89-0f61-4ded-8e75-ef24d89cd080" />
+![alt text](image-2.png)
+
 
 
 ### New Sample Data Prediction
 
-<img width="779" height="148" alt="image" src="https://github.com/user-attachments/assets/48810b9f-54d9-4b6b-a968-48faacc085cf" />
+![alt text](image-3.png)
 
 
 ## RESULT
