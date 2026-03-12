@@ -70,12 +70,12 @@ model = NeuralNet()
 criterion = nn.MSELoss()
 optimizer = optim.Adam(model.parameters(), lr=0.01)
 
-def train_model(nethraa_brain, X_train, y_train, criterion, optimizer, epochs=2000):
+def train_model(PRAG_brain, X_train, y_train, criterion, optimizer, epochs=2000):
     losses = []
 
     for epoch in range(epochs):
         optimizer.zero_grad()
-        output = nethraa_brain(X_train)
+        output = PRAG_brain(X_train)
         loss = criterion(output, y_train)
         loss.backward()
         optimizer.step()
